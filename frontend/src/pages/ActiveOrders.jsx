@@ -105,7 +105,11 @@ export default function ActiveOrders() {
               <div key={order.id} className={`ticket ${order.type === 'takeout' ? 'ticket-takeout' : ''}`}>
                 <div className="ticket-header">
                   <div className="ticket-table">
-                    {order.type === 'takeout' ? 'Takeout' : order.table === 'no-table' ? 'No Table' : `Table ${order.table}`}
+                    {order.table === 'no-table' && order.type === 'takeout'
+                      ? 'Takeout'
+                      : order.table === 'no-table'
+                        ? 'No Table'
+                        : `Table ${order.table}`}
                   </div>
                   <div className="ticket-time">#{order.orderNumber || order.id} • {formatTime(order.timestamp)}</div>
                 </div>
@@ -156,7 +160,11 @@ export default function ActiveOrders() {
               <div key={order.id} className={`ticket ticket-completed ${order.type === 'takeout' ? 'ticket-takeout' : ''}`}>
                 <div className="ticket-header">
                   <div className="ticket-table">
-                    {order.type === 'takeout' ? 'Takeout' : order.table === 'no-table' ? 'No Table' : `Table ${order.table}`}
+                    {order.table === 'no-table' && order.type === 'takeout'
+                      ? 'Takeout'
+                      : order.table === 'no-table'
+                        ? 'No Table'
+                        : `Table ${order.table}`}
                   </div>
                   <div className="ticket-time">#{order.orderNumber || order.id} • {formatTime(order.timestamp)}</div>
                 </div>

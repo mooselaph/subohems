@@ -243,6 +243,10 @@ body{background:var(--bg);font-family:Inter, system-ui, Arial, sans-serif;color:
 
 .ticket-completed .ticket-header{background:#9ca3af;color:var(--text-light)}
 
+.ticket-completed.ticket-takeout{border-color:#FF9500}
+
+.ticket-completed.ticket-takeout .ticket-header{background:#FF9500;color:var(--text-light)}
+
 .reactivate-btn{width:100%;background:#ff9800;color:var(--text-light);border:none;padding:12px;font-size:14px;font-weight:600;cursor:pointer;border-radius:0 0 12px 12px;transition:all 0.2s ease;touch-action:manipulation;margin-top:auto}
 .reactivate-btn:hover{background:#e08900;box-shadow:0 2px 8px rgba(255,152,0,0.3)}
 .reactivate-btn:active{transform:scale(0.98)}
