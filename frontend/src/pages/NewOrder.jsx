@@ -12,6 +12,7 @@ export default function NewOrder() {
   const [notes, setNotes] = useState('')
   const [orderItems, setOrderItems] = useState([])
   const [showOrderReview, setShowOrderReview] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
 
   const tables = Array.from({ length: 10 }, (_, i) => i + 1)
   const categories = ['All', 'Mains', 'Sides', 'Soups', 'Drinks']
@@ -122,17 +123,29 @@ export default function NewOrder() {
     // Dispatch custom event to notify Active Orders page
     window.dispatchEvent(new Event('ordersUpdated'))
     
-    // Reset form
-    setOrderItems([])
-    setSelectedTable(null)
-    setShowTableSelection(true)
-    setShowOrderReview(false)
+    // Show success animation
+    setShowSuccess(true)
     
-    alert('Order submitted successfully!')
+    // Reset form after animation completes
+    setTimeout(() => {
+      setOrderItems([])
+      setSelectedTable(null)
+      setShowTableSelection(true)
+      setShowOrderReview(false)
+      setShowSuccess(false)
+    }, 2000)
   }
 
   return (
     <div className="page new-order-page">
+      {showSuccess && (
+        <div className="success-overlay">
+          <div className="success-animation">
+            <div className="checkmark">✓</div>
+            <p>Order Submitted!</p>
+          </div>
+        </div>
+      )}
       <h1>New Order</h1>
 
       {/* Order Type Selection */}
