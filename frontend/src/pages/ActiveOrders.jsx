@@ -207,7 +207,7 @@ export default function ActiveOrders() {
                 </div>
 
                 <button className="reactivate-btn" onClick={() => handleReactivateTicket(order.id)}>
-                  ↺ Back to Active
+                  ↺ Return to Active
                 </button>
               </div>
             ))}
