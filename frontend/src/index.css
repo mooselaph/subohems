@@ -219,7 +219,7 @@ body{background:var(--bg);font-family:Inter, system-ui, Arial, sans-serif;color:
 
 .no-orders{text-align:center;padding:32px;color:#9ca3af;font-size:16px}
 
-.tickets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.tickets-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 
 .ticket{background:#fff;border:2px solid #e5e7eb;border-radius:12px;overflow:hidden;transition:all 0.2s ease;display:flex;flex-direction:column}
 .ticket:hover{border-color:var(--accent-primary);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
