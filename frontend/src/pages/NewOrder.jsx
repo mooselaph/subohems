@@ -106,14 +106,29 @@ export default function NewOrder() {
   }
 
   const handleConfirmOrder = () => {
-    // TODO: Submit order to backend
-    console.log('Order confirmed:', {
-      orderType,
+    // Save order to localStorage for Active Orders page
+    const newOrder = {
+      id: Date.now(),
+      type: orderType,
       table: selectedTable,
       items: orderItems,
-      total: getTotalPrice()
-    })
+      total: getTotalPrice(),
+      timestamp: Date.now()
+    }
+    
+    const existingOrders = JSON.parse(localStorage.getItem('activeOrders') || '[]')
+    localStorage.setItem('activeOrders', JSON.stringify([...existingOrders, newOrder]))
+    
+    // Dispatch custom event to notify Active Orders page
+    window.dispatchEvent(new Event('ordersUpdated'))
+    
+    // Reset form
+    setOrderItems([])
+    setSelectedTable(null)
+    setShowTableSelection(true)
     setShowOrderReview(false)
+    
+    alert('Order submitted successfully!')
   }
 
   return (
