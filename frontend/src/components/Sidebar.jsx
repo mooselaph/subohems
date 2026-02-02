@@ -37,7 +37,7 @@ const MENU = [
   { key: 'reports', label: 'Reports', icon: ReportsIcon }
 ]
 
-export default function Sidebar({ activePage, onNavigate }) {
+export default function Sidebar({ activePage, onNavigate, onShowSubmenu }) {
   const [collapsed, setCollapsed] = useState(false)
   const [expanded, setExpanded] = useState('management')
 
@@ -49,6 +49,10 @@ export default function Sidebar({ activePage, onNavigate }) {
     if (item.children && !collapsed) {
       e.preventDefault()
       toggleExpand(item.key)
+    } else if (item.children && collapsed) {
+      // When collapsed, show submenu selection in main content
+      e.preventDefault()
+      onShowSubmenu(item.key, item.children)
     } else if (!item.children) {
       onNavigate(item.key)
     }

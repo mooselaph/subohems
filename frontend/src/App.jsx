@@ -13,8 +13,38 @@ import Reports from './pages/Reports'
 
 export default function App() {
   const [activePage, setActivePage] = useState('dashboard')
+  const [showSubmenuSelection, setShowSubmenuSelection] = useState(null)
+
+  const handleNavigate = (page) => {
+    setActivePage(page)
+    setShowSubmenuSelection(null)
+  }
+
+  const handleShowSubmenu = (menuKey, children) => {
+    setShowSubmenuSelection({ menuKey, children })
+  }
 
   const renderPage = () => {
+    if (showSubmenuSelection) {
+      return (
+        <div className="page submenu-selection">
+          <h1>{showSubmenuSelection.menuKey === 'management' ? 'Management' : 'Orders'}</h1>
+          <p>Select an option below</p>
+          <div className="submenu-grid">
+            {showSubmenuSelection.children.map((child) => (
+              <button
+                key={child.key}
+                className="submenu-card"
+                onClick={() => handleNavigate(child.key)}
+              >
+                <div className="submenu-label">{child.label}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
     switch (activePage) {
       case 'dashboard': return <Dashboard />
       case 'menu': return <Menu />
@@ -32,7 +62,11 @@ export default function App() {
 
   return (
     <div className="app layout">
-      <Sidebar activePage={activePage} onNavigate={setActivePage} />
+      <Sidebar 
+        activePage={activePage} 
+        onNavigate={handleNavigate} 
+        onShowSubmenu={handleShowSubmenu}
+      />
       <main className="content">
         {renderPage()}
       </main>

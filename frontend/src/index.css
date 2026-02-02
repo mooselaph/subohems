@@ -57,6 +57,14 @@ body{background:var(--bg);font-family:Inter, system-ui, Arial, sans-serif;color:
 .page h1{margin:0 0 8px 0;font-size:28px;font-weight:600;color:var(--text-dark)}
 .page p{margin:0;color:#6b7280;font-size:16px}
 
+/* Submenu Selection Page */
+.submenu-selection{max-width:600px}
+.submenu-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:24px}
+.submenu-card{background:#fff;border:2px solid #e5e7eb;padding:24px;border-radius:12px;cursor:pointer;text-align:center;transition:all 0.2s ease;touch-action:manipulation}
+.submenu-card:hover{border-color:var(--accent-primary);background:rgba(69,227,255,0.05);transform:translateY(-2px)}
+.submenu-card:active{transform:scale(0.98)}
+.submenu-label{font-size:18px;font-weight:500;color:var(--text-dark)}
+
 /* New Order Page */
 .new-order-page{max-width:600px}
 .new-order-page h2{font-size:18px;font-weight:600;color:var(--text-dark);margin:0 0 12px 0}
