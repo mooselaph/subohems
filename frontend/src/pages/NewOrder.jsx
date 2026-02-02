@@ -14,6 +14,7 @@ export default function NewOrder() {
   const [showOrderReview, setShowOrderReview] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [menuItems, setMenuItems] = useState([])
+  const [toast, setToast] = useState(null)
 
   const tables = Array.from({ length: 10 }, (_, i) => i + 1)
   const baseCategories = [
@@ -49,6 +50,11 @@ export default function NewOrder() {
       // Filter only active items for ordering
       setMenuItems(items.filter(item => item.status === 'active'))
     }
+  }
+
+  const showToast = (message) => {
+    setToast(message)
+    setTimeout(() => setToast(null), 3000)
   }
 
   const sortedMenuItems = [...menuItems].sort((a, b) => a.name.localeCompare(b.name))
@@ -138,6 +144,22 @@ export default function NewOrder() {
   }
 
   const handleConfirmOrder = () => {
+    // Validate order has all required details
+    if (!orderType) {
+      showToast('Please select an order type (Dine In or Take Out)')
+      return
+    }
+
+    if (!selectedTable) {
+      showToast('Please select a table')
+      return
+    }
+
+    if (orderItems.length === 0) {
+      showToast('Cannot submit order: No menu items added. Please add at least one item to the order.')
+      return
+    }
+
     // Save order to localStorage for Active Orders page
     const now = new Date()
     const mm = String(now.getMonth() + 1).padStart(2, '0')
@@ -191,6 +213,13 @@ export default function NewOrder() {
           </div>
         </div>
       )}
+      
+      {toast && (
+        <div className="toast-notification">
+          {toast}
+        </div>
+      )}
+      
       <h1>New Order</h1>
 
       {/* Order Type Selection */}

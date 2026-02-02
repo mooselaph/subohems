@@ -94,13 +94,14 @@ export default function ActiveOrders() {
     const summary = {}
     activeOrders.forEach(order => {
       order.items.forEach(item => {
-        // Only count items that are not complete
-        if (!item.isComplete) {
+        const remainingQty = item.quantity - (item.checkedCount || 0)
+        // Only count items that have remaining unchecked quantity
+        if (remainingQty > 0) {
           const itemName = item.item.name
           if (summary[itemName]) {
-            summary[itemName] += item.quantity
+            summary[itemName] += remainingQty
           } else {
-            summary[itemName] = item.quantity
+            summary[itemName] = remainingQty
           }
         }
       })
