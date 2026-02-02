@@ -108,8 +108,22 @@ export default function NewOrder() {
 
   const handleConfirmOrder = () => {
     // Save order to localStorage for Active Orders page
+    const now = new Date()
+    const mm = String(now.getMonth() + 1).padStart(2, '0')
+    const dd = String(now.getDate()).padStart(2, '0')
+    const yy = String(now.getFullYear()).slice(-2)
+    const dateKey = `${mm}${dd}${yy}`
+
+    const storedDateKey = localStorage.getItem('orderNumberDateKey')
+    const lastOrderNumber = parseInt(localStorage.getItem('orderNumberCounter') || '0', 10)
+    const nextOrderNumber = storedDateKey === dateKey ? lastOrderNumber + 1 : 1
+    localStorage.setItem('orderNumberDateKey', dateKey)
+    localStorage.setItem('orderNumberCounter', String(nextOrderNumber))
+    const formattedOrderNumber = `${dateKey}-${String(nextOrderNumber).padStart(3, '0')}`
+
     const newOrder = {
       id: Date.now(),
+      orderNumber: formattedOrderNumber,
       type: orderType,
       table: selectedTable,
       items: orderItems,

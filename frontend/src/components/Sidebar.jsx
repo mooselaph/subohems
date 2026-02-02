@@ -29,7 +29,7 @@ const MENU = [
     icon: OrdersIcon,
     children: [
       { key: 'new-order', label: 'New Order', icon: PlusIcon },
-      { key: 'active-orders', label: 'Active Orders', icon: ListIcon },
+      { key: 'active-orders', label: "Today's Orders", icon: ListIcon },
       { key: 'order-history', label: 'Order History', icon: HistoryIcon }
     ]
   },

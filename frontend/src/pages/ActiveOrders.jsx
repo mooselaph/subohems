@@ -57,7 +57,23 @@ export default function ActiveOrders() {
   }
 
   const handleCompleteTicket = (orderId) => {
-    const updatedOrders = orders.filter(order => order.id !== orderId)
+    const updatedOrders = orders.map(order => {
+      if (order.id === orderId) {
+        return { ...order, isCompleted: true }
+      }
+      return order
+    })
+    setOrders(updatedOrders)
+    localStorage.setItem('activeOrders', JSON.stringify(updatedOrders))
+  }
+
+  const handleReactivateTicket = (orderId) => {
+    const updatedOrders = orders.map(order => {
+      if (order.id === orderId) {
+        return { ...order, isCompleted: false }
+      }
+      return order
+    })
     setOrders(updatedOrders)
     localStorage.setItem('activeOrders', JSON.stringify(updatedOrders))
   }
@@ -66,6 +82,9 @@ export default function ActiveOrders() {
     return order.items.length > 0 && order.items.every(item => item.isComplete)
   }
 
+  const activeOrders = orders.filter(order => !order.isCompleted)
+  const completedOrders = orders.filter(order => order.isCompleted)
+
   const formatTime = (timestamp) => {
     const date = new Date(timestamp)
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
@@ -73,54 +92,96 @@ export default function ActiveOrders() {
 
   return (
     <div className="page active-orders-page">
-      <h1>Active Orders</h1>
+      <h1>Today's Orders</h1>
       
-      {orders.length === 0 ? (
-        <p className="no-orders">No active orders</p>
-      ) : (
-        <div className="tickets-grid">
-          {orders.map((order) => (
-            <div key={order.id} className={`ticket ${order.type === 'takeout' ? 'ticket-takeout' : ''}`}>
-              <div className="ticket-header">
-                <div className="ticket-table">
-                  {order.type === 'takeout' ? 'Takeout' : order.table === 'no-table' ? 'No Table' : `Table ${order.table}`}
-                </div>
-                <div className="ticket-time">{formatTime(order.timestamp)}</div>
-              </div>
-              
-              <div className="ticket-items">
-                {order.items.map((item) => (
-                  <div key={item.id} className="ticket-item">
-                    <label className="ticket-item-label">
-                      <input
-                        type="checkbox"
-                        checked={item.isComplete}
-                        onChange={() => handleItemCheck(order.id, item.id)}
-                        className="ticket-checkbox"
-                      />
-                      <span className={`item-text ${item.isComplete ? 'complete' : ''}`}>
-                        {item.item.name} x{item.quantity}
-                        {item.checkedCount > 0 && !item.isComplete && (
-                          <span className="progress-indicator"> ({item.checkedCount}/{item.quantity})</span>
-                        )}
-                      </span>
-                    </label>
-                    {item.notes && (
-                      <div className="item-note">Note: {item.notes}</div>
-                    )}
+      {/* Active Orders Section */}
+      <div className="orders-section">
+        <h2 className="section-title">Active Orders</h2>
+        {activeOrders.length === 0 ? (
+          <p className="no-orders">No active orders</p>
+        ) : (
+          <div className="tickets-grid">
+            {activeOrders.map((order) => (
+              <div key={order.id} className={`ticket ${order.type === 'takeout' ? 'ticket-takeout' : ''}`}>
+                <div className="ticket-header">
+                  <div className="ticket-table">
+                    {order.type === 'takeout' ? 'Takeout' : order.table === 'no-table' ? 'No Table' : `Table ${order.table}`}
                   </div>
-                ))}
-              </div>
+                  <div className="ticket-time">#{order.orderNumber || order.id} • {formatTime(order.timestamp)}</div>
+                </div>
+                
+                <div className="ticket-items">
+                  {order.items.map((item) => (
+                    <div key={item.id} className="ticket-item">
+                      <label className="ticket-item-label">
+                        <input
+                          type="checkbox"
+                          checked={item.isComplete}
+                          onChange={() => handleItemCheck(order.id, item.id)}
+                          className="ticket-checkbox"
+                        />
+                        <span className={`item-text ${item.isComplete ? 'complete' : ''}`}>
+                          {item.item.name} x{item.quantity}
+                          {item.checkedCount > 0 && !item.isComplete && (
+                            <span className="progress-indicator"> ({item.checkedCount}/{item.quantity})</span>
+                          )}
+                        </span>
+                      </label>
+                      {item.notes && (
+                        <div className="item-note">Note: {item.notes}</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
 
-              {isTicketComplete(order) && (
-                <button className="complete-ticket-btn" onClick={() => handleCompleteTicket(order.id)}>
-                  ✓ Complete Ticket
+                {isTicketComplete(order) && (
+                  <button className="complete-ticket-btn" onClick={() => handleCompleteTicket(order.id)}>
+                    ✓ Complete Ticket
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Completed Orders Section */}
+      <div className="orders-section">
+        <h2 className="section-title">Completed Orders</h2>
+        {completedOrders.length === 0 ? (
+          <p className="no-orders">No completed orders</p>
+        ) : (
+          <div className="tickets-grid">
+            {completedOrders.map((order) => (
+              <div key={order.id} className={`ticket ticket-completed ${order.type === 'takeout' ? 'ticket-takeout' : ''}`}>
+                <div className="ticket-header">
+                  <div className="ticket-table">
+                    {order.type === 'takeout' ? 'Takeout' : order.table === 'no-table' ? 'No Table' : `Table ${order.table}`}
+                  </div>
+                  <div className="ticket-time">#{order.orderNumber || order.id} • {formatTime(order.timestamp)}</div>
+                </div>
+                
+                <div className="ticket-items">
+                  {order.items.map((item) => (
+                    <div key={item.id} className="ticket-item">
+                      <span className="item-text complete">
+                        {item.item.name} x{item.quantity}
+                      </span>
+                      {item.notes && (
+                        <div className="item-note">Note: {item.notes}</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <button className="reactivate-btn" onClick={() => handleReactivateTicket(order.id)}>
+                  ↺ Back to Active
                 </button>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
