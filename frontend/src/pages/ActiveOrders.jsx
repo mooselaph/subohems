@@ -90,12 +90,33 @@ export default function ActiveOrders() {
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
   }
 
+  const getOrderSummary = () => {
+    const summary = {}
+    activeOrders.forEach(order => {
+      order.items.forEach(item => {
+        const itemName = item.item.name
+        if (summary[itemName]) {
+          summary[itemName] += item.quantity
+        } else {
+          summary[itemName] = item.quantity
+        }
+      })
+    })
+    return Object.entries(summary)
+      .map(([name, qty]) => ({ name, qty }))
+      .sort((a, b) => a.name.localeCompare(b.name))
+  }
+
+  const orderSummary = getOrderSummary()
+
   return (
     <div className="page active-orders-page">
       <h1>Today's Orders</h1>
       
-      {/* Active Orders Section */}
-      <div className="orders-section">
+      <div className="orders-container">
+        <div className="orders-main">
+          {/* Active Orders Section */}
+          <div className="orders-section">
         <h2 className="section-title">Active Orders</h2>
         {activeOrders.length === 0 ? (
           <p className="no-orders">No active orders</p>
@@ -189,6 +210,25 @@ export default function ActiveOrders() {
             ))}
           </div>
         )}
+      </div>
+        </div>
+
+        {/* Summary Sidebar */}
+        <aside className="orders-summary">
+          <h3>Items Summary</h3>
+          {orderSummary.length === 0 ? (
+            <p className="summary-empty">No active items</p>
+          ) : (
+            <div className="summary-list">
+              {orderSummary.map((item, idx) => (
+                <div key={idx} className="summary-item">
+                  <span className="summary-name">{item.name}</span>
+                  <span className="summary-qty">{item.qty}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </aside>
       </div>
     </div>
   )
