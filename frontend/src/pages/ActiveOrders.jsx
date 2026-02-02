@@ -94,11 +94,14 @@ export default function ActiveOrders() {
     const summary = {}
     activeOrders.forEach(order => {
       order.items.forEach(item => {
-        const itemName = item.item.name
-        if (summary[itemName]) {
-          summary[itemName] += item.quantity
-        } else {
-          summary[itemName] = item.quantity
+        // Only count items that are not complete
+        if (!item.isComplete) {
+          const itemName = item.item.name
+          if (summary[itemName]) {
+            summary[itemName] += item.quantity
+          } else {
+            summary[itemName] = item.quantity
+          }
         }
       })
     })
