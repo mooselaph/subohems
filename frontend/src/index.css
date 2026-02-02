@@ -94,8 +94,8 @@ body{background:var(--bg);font-family:Inter, system-ui, Arial, sans-serif;color:
 .menu-section{margin-top:32px;padding-top:24px;border-top:2px solid #e5e7eb}
 .menu-section h2{font-size:18px;font-weight:600;color:var(--text-dark);margin:0 0 16px 0}
 
-.search-bar{margin-bottom:16px}
-.search-input{width:100%;padding:12px 16px;border:2px solid #e5e7eb;border-radius:8px;font-size:16px;color:var(--text-dark);background:#fff;transition:border-color 0.2s ease}
+.search-bar{margin-bottom:16px;width:100%}
+.search-input{width:100%;max-width:100%;box-sizing:border-box;padding:12px 16px;border:2px solid #e5e7eb;border-radius:8px;font-size:16px;color:var(--text-dark);background:#fff;transition:border-color 0.2s ease}
 .search-input:focus{outline:none;border-color:var(--accent-primary)}
 .search-input::placeholder{color:#9ca3af}
 
@@ -113,8 +113,8 @@ body{background:var(--bg);font-family:Inter, system-ui, Arial, sans-serif;color:
 .menu-item-card{background:#fff;border:2px solid #e5e7eb;padding:6px 4px;border-radius:6px;cursor:pointer;text-align:center;transition:all 0.2s ease;touch-action:manipulation;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .menu-item-card:hover{border-color:var(--accent-primary);background:rgba(69,227,255,0.05)}
 .menu-item-card:active{transform:scale(0.98)}
-.item-name{font-size:11px;font-weight:500;color:var(--text-dark);margin-bottom:2px;line-height:1.2;max-height:66px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
-.item-price{font-size:11px;color:#6b7280}
+.menu-item-card .item-name{font-size:11px;font-weight:500;color:var(--text-dark);margin-bottom:2px;line-height:1.2;max-height:66px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
+.menu-item-card .item-price{font-size:11px;color:#6b7280}
 
 .no-items-message{grid-column:1/-1;text-align:center;padding:32px 16px;color:#9ca3af;font-size:14px}
 

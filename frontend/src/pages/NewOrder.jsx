@@ -15,16 +15,122 @@ export default function NewOrder() {
   const [showSuccess, setShowSuccess] = useState(false)
 
   const tables = Array.from({ length: 10 }, (_, i) => i + 1)
-  const categories = ['All', 'Mains', 'Sides', 'Soups', 'Drinks']
+  const baseCategories = [
+    'Main',
+    'Appetizers',
+    'Soup',
+    'Pasta and Noodles',
+    'Salad',
+    'Vegetarian',
+    'Plant Based Dish',
+    'Special',
+    'Dessert',
+    'Additional Menu',
+    'Rice'
+  ]
+  const categories = ['All', ...baseCategories]
 
   const menuItems = [
-    { id: 1, name: 'Rice Platter', price: 150, category: 'Sides' },
-    { id: 2, name: 'Coke Regular - Can', price: 120, category: 'Drinks' }
+    { id: 1, name: 'Unli sa Dumplings', price: 399, category: 'Appetizers' },
+    { id: 2, name: 'Sinuglaw sa Gata', price: 650, category: 'Appetizers' },
+    { id: 3, name: 'Lumpia', price: 499, category: 'Appetizers' },
+    { id: 4, name: 'Fresh Baked Oyster', price: 450, category: 'Appetizers' },
+    { id: 5, name: 'Mussels, Clams, and Scallop', price: 550, category: 'Appetizers' },
+    { id: 6, name: 'Baked Scallops', price: 620, category: 'Appetizers' },
+    { id: 7, name: 'Tinapa Croquetas', price: 510, category: 'Appetizers' },
+    { id: 8, name: 'Empanada Tangigue', price: 560, category: 'Appetizers' },
+    { id: 9, name: 'Pork BBQ and Baby Squid', price: 495, category: 'Appetizers' },
+
+    { id: 10, name: 'Labanos Salad', price: 300, category: 'Salad' },
+    { id: 11, name: 'Ensaladang Espesyal', price: 390, category: 'Salad' },
+    { id: 12, name: 'Tuna Sashimi', price: 620, category: 'Salad' },
+
+    { id: 13, name: 'Malunggay Pesto', price: 450, category: 'Pasta and Noodles' },
+    { id: 14, name: 'Spicy Squid Ink Palabok', price: 550, category: 'Pasta and Noodles' },
+    { id: 15, name: 'Crispy Canton', price: 799, category: 'Pasta and Noodles' },
+
+    { id: 16, name: 'Laswa', price: 610, category: 'Soup' },
+    { id: 17, name: 'Beef Mami', price: 599, category: 'Soup' },
+    { id: 18, name: 'Balbacua', price: 800, category: 'Soup' },
+    { id: 19, name: 'Sudo Laksa', price: 799, category: 'Soup' },
+    { id: 20, name: 'Sinigang Pork/Shrimp', price: 880, category: 'Soup' },
+    { id: 21, name: 'Native Chicken Binakol', price: 1050, category: 'Soup' },
+    { id: 22, name: 'Bulalo', price: 850, category: 'Soup' },
+
+    { id: 23, name: 'Crispy Dinuguan', price: 450, category: 'Main' },
+    { id: 24, name: 'Salmon Paksiw', price: 892, category: 'Main' },
+    { id: 25, name: "Titi Elaine's Pochero", price: 750, category: 'Main' },
+    { id: 26, name: 'Bagnet Express', price: 584, category: 'Main' },
+    { id: 27, name: 'Chicken Pinaparan', price: 680, category: 'Main' },
+    { id: 28, name: 'Adobo sa Dilaw', price: 600, category: 'Main' },
+    { id: 29, name: 'Kare-Kare', price: 950, category: 'Main' },
+    { id: 30, name: 'Inihaw na Isda / Sinigang Isda', price: 970, category: 'Main' },
+    { id: 31, name: 'Tomahawk and Stuffed Squid', price: 999, category: 'Main' },
+    { id: 32, name: 'Crispy Pata', price: 1650, category: 'Main' },
+    { id: 33, name: 'Chicken Paru-Paru Half', price: 850, category: 'Main' },
+    { id: 34, name: 'Chicken Paru-Paru', price: 1400, category: 'Main' },
+    { id: 35, name: 'Tinola Itum', price: 930, category: 'Main' },
+    { id: 36, name: 'Lechon', price: 999, category: 'Main' },
+    { id: 37, name: 'Seafood Platter', price: 2999, category: 'Main' },
+    { id: 38, name: 'Mix Seafood Escabeche', price: 1899, category: 'Main' },
+    { id: 39, name: 'Lamb Gata Adobo', price: 1500, category: 'Main' },
+    { id: 40, name: 'Bisteak Tagalog', price: 1700, category: 'Main' },
+    { id: 41, name: 'Seafood Express', price: 1999, category: 'Main' },
+    { id: 42, name: 'Boodle Plate', price: 2999, category: 'Main' },
+
+    { id: 43, name: 'Ginataang Gulay', price: 450, category: 'Vegetarian' },
+    { id: 44, name: 'Buko Puso (Shrimp and Beef)', price: 750, category: 'Vegetarian' },
+
+    { id: 45, name: 'Tortang Talong', price: 400, category: 'Plant Based Dish' },
+    { id: 46, name: 'Fresh Lumpia', price: 650, category: 'Plant Based Dish' },
+    { id: 47, name: 'All Fried Lumpia', price: 650, category: 'Plant Based Dish' },
+    { id: 48, name: 'Kangkong Nachos', price: 600, category: 'Plant Based Dish' },
+    { id: 49, name: 'Pakbet', price: 540, category: 'Plant Based Dish' },
+    { id: 50, name: 'Adobo Tofu', price: 450, category: 'Plant Based Dish' },
+
+    { id: 51, name: 'Turon Stout Split', price: 180, category: 'Dessert' },
+    { id: 52, name: 'Turon Split', price: 280, category: 'Dessert' },
+    { id: 53, name: 'Leche Flan', price: 350, category: 'Dessert' },
+    { id: 54, name: 'Ube Chocolate Lava Cake', price: 350, category: 'Dessert' },
+    { id: 55, name: 'Mango Cheese Cake', price: 380, category: 'Dessert' },
+    { id: 56, name: 'Halo-Halo', price: 450, category: 'Dessert' },
+    { id: 57, name: 'Semi Frio', price: 409, category: 'Dessert' },
+    { id: 58, name: 'TiramisuMan', price: 400, category: 'Dessert' },
+
+    { id: 59, name: 'Fried Chicken', price: 788, category: 'Special' },
+    { id: 60, name: 'Bagnet Pakbet', price: 720, category: 'Special' },
+    { id: 61, name: 'Sisig', price: 470, category: 'Special' },
+    { id: 62, name: 'Chorizo Burger', price: 480, category: 'Special' },
+    { id: 63, name: 'Laing Fishball', price: 650, category: 'Special' },
+
+    { id: 64, name: 'Sorbet', price: 120, category: 'Additional Menu' },
+    { id: 65, name: 'Fruit Platter', price: 550, category: 'Additional Menu' },
+    { id: 66, name: 'Butter Garlic Shrimp', price: 450, category: 'Additional Menu' },
+    { id: 67, name: 'Escabetche/Grilled/Fried Snapper', price: 950, category: 'Additional Menu' },
+    { id: 68, name: 'Grilled Squid', price: 1250, category: 'Additional Menu' },
+    { id: 69, name: 'Fried Tilapia', price: 450, category: 'Additional Menu' },
+    { id: 70, name: 'Alabar Sauce', price: 100, category: 'Additional Menu' },
+    { id: 71, name: 'Bread', price: 50, category: 'Additional Menu' },
+    { id: 72, name: 'Fries', price: 280, category: 'Additional Menu' },
+    { id: 73, name: 'Beef Rendang', price: 650, category: 'Additional Menu' },
+    { id: 74, name: 'Pinangat', price: 650, category: 'Additional Menu' },
+    { id: 75, name: 'Pata Longgo Style', price: 650, category: 'Additional Menu' },
+    { id: 76, name: 'Grilled Squid (Regular)', price: 625, category: 'Additional Menu' },
+    { id: 77, name: 'All BBQ Squid', price: 550, category: 'Additional Menu' },
+    { id: 78, name: 'Baked Clams', price: 550, category: 'Additional Menu' },
+    { id: 79, name: 'Fried Lumpia', price: 650, category: 'Additional Menu' },
+
+    { id: 80, name: 'Garlic Rice', price: 65, category: 'Rice' },
+    { id: 81, name: 'Bagoong Fried Rice', price: 599, category: 'Rice' },
+    { id: 82, name: 'Seafood Fried Rice', price: 789, category: 'Rice' },
+    { id: 83, name: 'Pineapple Fried Rice', price: 680, category: 'Rice' }
   ]
 
+  const sortedMenuItems = [...menuItems].sort((a, b) => a.name.localeCompare(b.name))
+
   const filteredItems = selectedCategory === 'All' 
-    ? menuItems 
-    : menuItems.filter(item => item.category === selectedCategory)
+    ? sortedMenuItems 
+    : sortedMenuItems.filter(item => item.category === selectedCategory)
 
   const searchedItems = filteredItems.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
