@@ -44,11 +44,109 @@ export default function NewOrder() {
   }, [])
 
   const loadMenuItems = () => {
-    const saved = localStorage.getItem('menuItems')
-    if (saved) {
-      const items = JSON.parse(saved)
-      // Filter only active items for ordering
-      setMenuItems(items.filter(item => item.status === 'active'))
+    try {
+      const saved = localStorage.getItem('menuItems')
+      console.log('Loading menu items from localStorage:', saved ? 'Found' : 'Not found')
+      
+      if (saved) {
+        const items = JSON.parse(saved)
+        const activeItems = items.filter(item => item.status === 'active')
+        console.log('Loaded', activeItems.length, 'active menu items')
+        setMenuItems(activeItems)
+      } else {
+        // Initialize with default menu items
+        console.log('Initializing default menu items for NewOrder')
+        const defaultMenu = [
+          { id: 1, name: 'Uncles Dumplings', price: 399, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
+          { id: 2, name: 'Sinuglaw sa Gata', price: 650, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
+          { id: 3, name: 'Lumpia', price: 499, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
+          { id: 4, name: 'Fresh Baked Oyster', price: 450, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
+          { id: 5, name: 'Mussels, Clams, and Scallop', price: 550, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
+          { id: 6, name: 'Baked Scallops', price: 620, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
+          { id: 7, name: 'Tinapa Croquetas', price: 510, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
+          { id: 8, name: 'Empanada Tangigue', price: 560, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
+          { id: 9, name: 'Pork BBQ and Baby Squid', price: 495, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
+          { id: 10, name: 'Labanos Salad', price: 300, category: 'Salad', status: 'active', description: '', createdAt: Date.now() },
+          { id: 11, name: 'Ensaladang Espesyal', price: 390, category: 'Salad', status: 'active', description: '', createdAt: Date.now() },
+          { id: 12, name: 'Tuna Sashimi', price: 620, category: 'Salad', status: 'active', description: '', createdAt: Date.now() },
+          { id: 13, name: 'Malunggay Pesto', price: 450, category: 'Pasta and Noodles', status: 'active', description: '', createdAt: Date.now() },
+          { id: 14, name: 'Spicy Squid Ink Palabok', price: 550, category: 'Pasta and Noodles', status: 'active', description: '', createdAt: Date.now() },
+          { id: 15, name: 'Crispy Canton', price: 799, category: 'Pasta and Noodles', status: 'active', description: '', createdAt: Date.now() },
+          { id: 16, name: 'Laswa', price: 610, category: 'Soup', status: 'active', description: '', createdAt: Date.now() },
+          { id: 17, name: 'Beef Mami', price: 599, category: 'Soup', status: 'active', description: '', createdAt: Date.now() },
+          { id: 18, name: 'Balbacua', price: 800, category: 'Soup', status: 'active', description: '', createdAt: Date.now() },
+          { id: 19, name: 'Sudo Laksa', price: 799, category: 'Soup', status: 'active', description: '', createdAt: Date.now() },
+          { id: 20, name: 'Sinigang Pork/Shrimp', price: 880, category: 'Soup', status: 'active', description: '', createdAt: Date.now() },
+          { id: 21, name: 'Native Chicken Binakol', price: 1050, category: 'Soup', status: 'active', description: '', createdAt: Date.now() },
+          { id: 22, name: 'Bulalo', price: 850, category: 'Soup', status: 'active', description: '', createdAt: Date.now() },
+          { id: 23, name: 'Crispy Dinuguan', price: 450, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 24, name: 'Salmon Paksiw', price: 892, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 25, name: "Titi Elaine's Pochero", price: 750, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 26, name: 'Bagnet Express', price: 584, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 27, name: 'Chicken Pinaparan', price: 680, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 28, name: 'Adobo sa Dilaw', price: 600, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 29, name: 'Kare-Kare', price: 950, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 30, name: 'Inihaw na Isda / Sinigang Isda', price: 970, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 31, name: 'Tomahawk and Stuffed Squid', price: 999, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 32, name: 'Crispy Pata', price: 1650, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 33, name: 'Chicken Paru-Paru Half', price: 850, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 34, name: 'Chicken Paru-Paru', price: 1400, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 35, name: 'Tinola Itum', price: 930, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 36, name: 'Lechon', price: 999, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 37, name: 'Seafood Platter', price: 2999, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 38, name: 'Mix Seafood Escabeche', price: 1899, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 39, name: 'Lamb Gata Adobo', price: 1500, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 40, name: 'Bisteak Tagalog', price: 1700, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 41, name: 'Seafood Express', price: 1999, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 42, name: 'Boodle Plate', price: 2999, category: 'Main', status: 'active', description: '', createdAt: Date.now() },
+          { id: 43, name: 'Ginataang Gulay', price: 450, category: 'Vegetarian', status: 'active', description: '', createdAt: Date.now() },
+          { id: 44, name: 'Buko Puso (Shrimp and Beef)', price: 750, category: 'Vegetarian', status: 'active', description: '', createdAt: Date.now() },
+          { id: 45, name: 'Tortang Talong', price: 400, category: 'Plant Based Dish', status: 'active', description: '', createdAt: Date.now() },
+          { id: 46, name: 'Fresh Lumpia', price: 650, category: 'Plant Based Dish', status: 'active', description: '', createdAt: Date.now() },
+          { id: 47, name: 'All Fried Lumpia', price: 650, category: 'Plant Based Dish', status: 'active', description: '', createdAt: Date.now() },
+          { id: 48, name: 'Kangkong Nachos', price: 600, category: 'Plant Based Dish', status: 'active', description: '', createdAt: Date.now() },
+          { id: 49, name: 'Pakbet', price: 540, category: 'Plant Based Dish', status: 'active', description: '', createdAt: Date.now() },
+          { id: 50, name: 'Adobo Tofu', price: 450, category: 'Plant Based Dish', status: 'active', description: '', createdAt: Date.now() },
+          { id: 51, name: 'Turon Stout Split', price: 180, category: 'Dessert', status: 'active', description: '', createdAt: Date.now() },
+          { id: 52, name: 'Turon Split', price: 280, category: 'Dessert', status: 'active', description: '', createdAt: Date.now() },
+          { id: 53, name: 'Leche Flan', price: 350, category: 'Dessert', status: 'active', description: '', createdAt: Date.now() },
+          { id: 54, name: 'Ube Chocolate Lava Cake', price: 350, category: 'Dessert', status: 'active', description: '', createdAt: Date.now() },
+          { id: 55, name: 'Mango Cheese Cake', price: 380, category: 'Dessert', status: 'active', description: '', createdAt: Date.now() },
+          { id: 56, name: 'Halo-Halo', price: 450, category: 'Dessert', status: 'active', description: '', createdAt: Date.now() },
+          { id: 57, name: 'Semi Frio', price: 409, category: 'Dessert', status: 'active', description: '', createdAt: Date.now() },
+          { id: 58, name: 'TiramisuMan', price: 400, category: 'Dessert', status: 'active', description: '', createdAt: Date.now() },
+          { id: 59, name: 'Fried Chicken', price: 788, category: 'Special', status: 'active', description: '', createdAt: Date.now() },
+          { id: 60, name: 'Bagnet Pakbet', price: 720, category: 'Special', status: 'active', description: '', createdAt: Date.now() },
+          { id: 61, name: 'Sisig', price: 470, category: 'Special', status: 'active', description: '', createdAt: Date.now() },
+          { id: 62, name: 'Chorizo Burger', price: 480, category: 'Special', status: 'active', description: '', createdAt: Date.now() },
+          { id: 63, name: 'Laing Fishball', price: 650, category: 'Special', status: 'active', description: '', createdAt: Date.now() },
+          { id: 64, name: 'Sorbet', price: 120, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 65, name: 'Fruit Platter', price: 550, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 66, name: 'Butter Garlic Shrimp', price: 450, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 67, name: 'Escabetche/Grilled/Fried Snapper', price: 950, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 68, name: 'Grilled Squid', price: 1250, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 69, name: 'Fried Tilapia', price: 450, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 70, name: 'Alabar Sauce', price: 100, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 71, name: 'Bread', price: 50, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 72, name: 'Fries', price: 280, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 73, name: 'Beef Rendang', price: 650, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 74, name: 'Pinangat', price: 650, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 75, name: 'Pata Longgo Style', price: 650, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 76, name: 'Grilled Squid (Regular)', price: 625, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 77, name: 'All BBQ Squid', price: 550, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 78, name: 'Baked Clams', price: 550, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 79, name: 'Fried Lumpia', price: 650, category: 'Additional Menu', status: 'active', description: '', createdAt: Date.now() },
+          { id: 80, name: 'Garlic Rice', price: 65, category: 'Rice', status: 'active', description: '', createdAt: Date.now() },
+          { id: 81, name: 'Bagoong Fried Rice', price: 599, category: 'Rice', status: 'active', description: '', createdAt: Date.now() },
+          { id: 82, name: 'Seafood Fried Rice', price: 789, category: 'Rice', status: 'active', description: '', createdAt: Date.now() },
+          { id: 83, name: 'Pineapple Fried Rice', price: 680, category: 'Rice', status: 'active', description: '', createdAt: Date.now() }
+        ]
+        localStorage.setItem('menuItems', JSON.stringify(defaultMenu))
+        setMenuItems(defaultMenu)
+        console.log('Initialized', defaultMenu.length, 'default menu items')
+      }
+    } catch (error) {
+      console.error('Error loading menu items:', error)
     }
   }
 

@@ -22,8 +22,12 @@ body{background:var(--bg);font-family:Inter, system-ui, Arial, sans-serif;color:
   transition:width .2s ease;
   touch-action:manipulation;
   overflow-y:auto;
+  position:fixed;
+  left:0;
+  top:0;
+  z-index:100;
 }
-.sidebar.collapsed{width:48px}
+.sidebar.collapsed{width:48px;position:fixed}
 .collapse-btn{background:transparent;border:0;color:inherit;padding:10px;cursor:pointer;align-self:flex-end;margin-right:4px;min-width:40px;min-height:40px;flex-shrink:0}
 .menu{list-style:none;padding:0;margin:12px 0;flex:1;overflow-y:auto}
 .menu-item{display:flex;align-items:center;padding:10px 12px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;min-height:40px;color:var(--text-light)}
@@ -50,7 +54,8 @@ body{background:var(--bg);font-family:Inter, system-ui, Arial, sans-serif;color:
 .sidebar.collapsed .submenu-wrapper{display:none}
 
 /* Content area */
-.content{flex:1;display:flex;align-items:flex-start;justify-content:flex-start;padding:24px;overflow-y:auto}
+.content{flex:1;display:flex;align-items:flex-start;justify-content:flex-start;padding:24px;overflow-y:auto;margin-left:200px;transition:margin-left .2s ease}
+.content.sidebar-collapsed{margin-left:48px}
 
 /* Page styles */
 .page{max-width:1200px;width:100%}

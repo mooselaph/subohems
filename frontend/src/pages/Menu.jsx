@@ -35,12 +35,18 @@ export default function Menu() {
   }, [])
 
   const loadMenuItems = () => {
-    const saved = localStorage.getItem('menuItems')
-    if (saved) {
-      setMenuItems(JSON.parse(saved))
-    } else {
-      // Initialize with default menu items
-      const defaultMenu = [
+    try {
+      const saved = localStorage.getItem('menuItems')
+      console.log('Loading menu items from localStorage:', saved ? 'Found' : 'Not found')
+      
+      if (saved) {
+        const items = JSON.parse(saved)
+        console.log('Loaded', items.length, 'menu items')
+        setMenuItems(items)
+      } else {
+        // Initialize with default menu items
+        console.log('Initializing default menu items')
+        const defaultMenu = [
         { id: 1, name: 'Uncles Dumplings', price: 399, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
         { id: 2, name: 'Sinuglaw sa Gata', price: 650, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
         { id: 3, name: 'Lumpia', price: 499, category: 'Appetizers', status: 'active', description: '', createdAt: Date.now() },
@@ -126,14 +132,24 @@ export default function Menu() {
         { id: 83, name: 'Pineapple Fried Rice', price: 680, category: 'Rice', status: 'active', description: '', createdAt: Date.now() }
       ]
       saveMenuItems(defaultMenu)
+      }
+    } catch (error) {
+      console.error('Error loading menu items from localStorage:', error)
+      alert('Failed to load menu items. Please check browser console.')
     }
   }
 
   const saveMenuItems = (items) => {
-    localStorage.setItem('menuItems', JSON.stringify(items))
-    setMenuItems(items)
-    // Notify other components that menu items have been updated
-    window.dispatchEvent(new Event('menuItemsUpdated'))
+    try {
+      localStorage.setItem('menuItems', JSON.stringify(items))
+      console.log('Saved', items.length, 'menu items to localStorage')
+      setMenuItems(items)
+      // Notify other components that menu items have been updated
+      window.dispatchEvent(new Event('menuItemsUpdated'))
+    } catch (error) {
+      console.error('Error saving menu items to localStorage:', error)
+      alert('Failed to save menu items. Your browser might have localStorage disabled or storage quota exceeded.')
+    }
   }
 
   const handleOpenModal = (item = null) => {

@@ -37,9 +37,17 @@ const MENU = [
   { key: 'reports', label: 'Reports', icon: ReportsIcon }
 ]
 
-export default function Sidebar({ activePage, onNavigate, onShowSubmenu }) {
+export default function Sidebar({ activePage, onNavigate, onShowSubmenu, onCollapsedChange }) {
   const [collapsed, setCollapsed] = useState(false)
   const [expanded, setExpanded] = useState('management')
+
+  const handleCollapse = () => {
+    const newCollapsed = !collapsed
+    setCollapsed(newCollapsed)
+    if (onCollapsedChange) {
+      onCollapsedChange(newCollapsed)
+    }
+  }
 
   const toggleExpand = (key) => {
     setExpanded((current) => current === key ? null : key)
@@ -67,7 +75,7 @@ export default function Sidebar({ activePage, onNavigate, onShowSubmenu }) {
     <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
       <button
         className="collapse-btn"
-        onClick={() => setCollapsed((c) => !c)}
+        onClick={handleCollapse}
         aria-label="Toggle sidebar"
       >
         {collapsed ? '▶' : '◀'}

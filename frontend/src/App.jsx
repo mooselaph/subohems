@@ -14,6 +14,7 @@ import Reports from './pages/Reports'
 export default function App() {
   const [activePage, setActivePage] = useState('dashboard')
   const [showSubmenuSelection, setShowSubmenuSelection] = useState(null)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   const handleNavigate = (page) => {
     setActivePage(page)
@@ -66,8 +67,9 @@ export default function App() {
         activePage={activePage} 
         onNavigate={handleNavigate} 
         onShowSubmenu={handleShowSubmenu}
+        onCollapsedChange={setSidebarCollapsed}
       />
-      <main className="content">
+      <main className={`content ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
         {renderPage()}
       </main>
     </div>
